@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parqueadero Centro Comercial</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Parqueadero Centro Comercial</h1>
+        <form method="post" action="procesar.php">
+            <label for="placa">Ingrese la placa del vehículo:</label>
+            <input type="text" id="placa" name="placa" required>
+            <button type="submit">Consultar</button>
+        </form>
+        <?php if(isset($vehiculo)) { ?>
+        <div class="resultado">
+            <?php if(isset($error_msg)) { ?>
+            <p class="error"><?php echo $error_msg; ?></p>
+            <?php } else { ?>
+            <p>Placa: <?php echo $vehiculo["placa"]; ?></p>
+            <p>Hora de entrada: <?php echo $vehiculo["hora_entrada"]; ?></p>
+            <?php if(isset($tiempo_restante)) { ?>
+            <p>Tiempo restante para salir: <?php echo $tiempo_restante; ?> minutos</p>
+            <?php } else { ?>
+            <p>Valor a pagar: $<?php echo $valor_a_pagar; ?></p>
+            <form method="post" action="pagar.php">
+                <input type="hidden" name="placa" value="<?php echo $vehiculo["placa"]; ?>">
+                <input type="hidden" name="valor_a_pagar" value="<?php echo $valor_a_pagar; ?>">
+                <button type="submit">Pagar</button>
+            </form>
+            <?php } ?>
+            <?php } ?>
+        </div>
+        <?php } ?>
+    </div>
+</body>
+</html>
+
